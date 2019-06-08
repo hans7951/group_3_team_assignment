@@ -316,6 +316,8 @@ void stage_5(int x, int y, int z)
 		locate_number(x + number_location[i][0], y + h, z + number_location[i][1], random, 5);
 		i++;
 	}
+	기본틀(x - 46, y - 1, z - 46, 93, black_concrete);
+	판(x - 46, y - 1, z - 46, 93, black_concrete);
 	locate_circle(x, y, z, 10, water);
 }
 

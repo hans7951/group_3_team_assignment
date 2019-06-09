@@ -253,7 +253,7 @@ void stage_3(int x, int y, int z)
 	}
 	locate_circle(x, y, z, 20, lava);
 	locate_circle(x, y + 1, z, 2, water);
-	locate_circle(x, 250, z, 22, stone);
+	locate_circle(x, 254, z, 22, stone);
 }
 
 void stage_5(int x, int y, int z)
@@ -330,6 +330,7 @@ void stage_5(int x, int y, int z)
 
 void locate_elevator(int x, int y, int z)
 {
+	locateBlock(air, x, 251, z);
 	for (int h = 0; h <= 243; h++)
 	{
 		locateBlock(glass, x + 1, y + h, z);
@@ -337,7 +338,7 @@ void locate_elevator(int x, int y, int z)
 		locateBlock(glass, x, y + h, z - 1);
 		locateBlock(glass, x, y + h, z + 1);
 	}
-	for (int h = 0; h <= 243; h+=2) 
+	for (int h = 0; h <= 243; h += 2)
 	{
 		locateWater(water, x, y + h, z);
 	}
@@ -497,16 +498,16 @@ void stage_1(int x, int y, int z)
 		판(x - 21, y + h, z - 21, 43, black_concrete);
 	}
 	int holl_location[6] = { 1,3,2,0,1,0 };
-	for (int h = 0;h<6;h++) 
+	for (int h = 0; h < 6; h++)
 	{
 		int location[4][3] = { {x + 1, y + (h + 1) * 40, z + 1}, {x + 1, y + (h + 1) * 40, z - 20}, {x - 20, y + (h + 1) * 40, z - 20}, {x - 20, y + (h + 1) * 40, z + 1} };
-		locate_clover(location[h % 4][0] + 5       , location[h % 4][1] - 40      , location[h % 4][2] + 4      , glowstone);
-		locate_heart  (location[(h + 1) % 4][0] + 4, location[(h + 1) % 4][1] - 40, location[(h + 1) % 4][2] + 5, glowstone);
+		locate_clover(location[h % 4][0] + 5, location[h % 4][1] - 40, location[h % 4][2] + 4, glowstone);
+		locate_heart(location[(h + 1) % 4][0] + 4, location[(h + 1) % 4][1] - 40, location[(h + 1) % 4][2] + 5, glowstone);
 		locate_diamond(location[(h + 2) % 4][0] + 2, location[(h + 2) % 4][1] - 40, location[(h + 2) % 4][2] + 7, glowstone);
-		locate_space  (location[(h + 3) % 4][0] + 5, location[(h + 3) % 4][1] - 40, location[(h + 3) % 4][2] + 5, glowstone);
+		locate_space(location[(h + 3) % 4][0] + 5, location[(h + 3) % 4][1] - 40, location[(h + 3) % 4][2] + 5, glowstone);
 		판(location[h % 4][0], location[h % 4][1], location[h % 4][2], 20, air);
 	}
-	판(x-1,y + 1,z-1,3,water);
+	판(x - 1, y + 1, z - 1, 3, water);
 }
 
 void Install_stage_2(int x, int z, int h, int floor, int deco)
@@ -603,6 +604,7 @@ void woolColor(int* color, WoolID* mywool)
 
 void pyramid(int px, int py, int pz)
 {
+	기본틀(px-58,py,pz-58,117,black_concrete);
 	WoolID mywool;
 	BlockID water = createWater();
 

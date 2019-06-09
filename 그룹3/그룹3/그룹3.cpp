@@ -32,6 +32,9 @@ OreID lapis = createOre(ORE_LAPIS_LAZULI);
 
 #define M_PI       3.14159265358979323846
 
+void 판(int a, int b, int c, int r, BlockID block);
+void 기본틀(int x, int y, int z, int r, BlockID block);
+
 void locate_number(int x, int y, int z, int number, int direction)
 {
 

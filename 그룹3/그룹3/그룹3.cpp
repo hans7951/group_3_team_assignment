@@ -697,6 +697,7 @@ void pyramid(int px, int py, int pz)
 int main()
 {
 	int x, y, z;
+	printf("x,y,z 좌표를 입력해주세요! 좌표는 현재 좌표에서 적어도 500이상 멀게 설정해주세요!\n 그리고 y좌표는 되도록이면 5로 설정해주세요")
 	scanf_s("%d %d %d", &x, &y, &z);
 
 	stage_1(x, y, z - 52);

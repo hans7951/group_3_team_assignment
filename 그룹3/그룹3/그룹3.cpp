@@ -557,6 +557,138 @@ void stage_2(int x, int y, int z)
 	Drop_stage_2(x, y, z, h);                     //드로퍼 설치
 }
 
+void woolColor(int* color, WoolID* mywool)
+{
+
+	/*
+	양털의 색깔을 결정하는 함수
+	빨주노초파남보 순서대로 양털 색깔이 바뀌도록 한다.
+	*/
+
+	switch (*color)
+	{
+	case 1:
+		*mywool = createWool(COLOR_RED);
+		break;
+
+	case 2:
+		*mywool = createWool(COLOR_ORANGE);
+		break;
+
+	case 3:
+		*mywool = createWool(COLOR_YELLOW);
+		break;
+
+	case 4:
+		*mywool = createWool(COLOR_GREEN);
+		break;
+
+	case 5:
+		*mywool = createWool(COLOR_LIGHT_BLUE);
+		break;
+
+	case 6:
+		*mywool = createWool(COLOR_BLUE);
+		break;
+
+	case 7:
+		*color = 0;
+		*mywool = createWool(COLOR_PURPLE);
+		break;
+
+	default:
+		break;
+	}
+}
+
+void pyramid(int px, int py, int pz)
+{
+	WoolID mywool;
+	BlockID water = createWater();
+
+	int color = 1;
+	int bz = 0;
+
+	int floor[7] = { 10, 10, 20, 30, 30, 40, 60 }; // 각각의 피라미드의 크기
+
+
+	// 도착부분
+	woolColor(&color, &mywool);
+	color = 1;
+
+	locateWater(water, px, py, pz);
+	locateWool(mywool, px, py - 1, pz);
+	locateWool(mywool, px + 1, py, pz);
+	locateWool(mywool, px - 1, py, pz);
+	locateWool(mywool, px, py, pz + 1);
+	locateWool(mywool, px, py, pz - 1);
+
+
+	// 마름모 쌓기
+	for (int i = 0; i < 7; i++)
+	{
+		for (int y = 0; y <= floor[i]; y++, color++)
+		{
+			woolColor(&color, &mywool); // 양털 색깔 정하기
+
+			for (int x = 0, z = bz; z >= 0; x++, z--)
+			{
+
+				if (y == 0 or y == floor[i]) // 끝 부분에 블럭을 설치하지 않도록 한다.
+					continue;
+
+				locateWool(mywool, px + x, py + y, pz + z);
+				locateWool(mywool, px + x, py + y, pz - z);
+				locateWool(mywool, px - x, py + y, pz + z);
+				locateWool(mywool, px - x, py + y, pz - z);
+
+
+
+			}
+
+			if (y >= floor[i] / 2) // 중간 지점을 지나는 부분부터 마름모 단면이 줄어들도록 한다.
+				bz--;
+			else
+				bz++; // 중간 지점을 지나지 않았다면 마름모 단면 증가
+
+		}
+
+		py += floor[i] - 2; // 높이 누적
+		bz = 0; // 초기화
+	}
+
+	locateWater(water, px, 192, pz); // 물 설치
+	locateWater(water, px, 134, pz);
+	locateWater(water, px, 96, pz);
+	locateWater(water, px, 68, pz);
+	locateWater(water, px, 40, pz);
+	locateWater(water, px, 22, pz);
+	locateWater(water, px, 14, pz);
+
+
+	// 위쪽 커버? 설치
+
+	int cover = (floor[6] / 2) + 1;
+	bz = cover;
+
+	for (int y = py - cover + 4; y <= py + 1; y++, color++)
+	{
+		woolColor(&color, &mywool);
+
+		for (int x = 0, z = bz; z >= 0; x++, z--)
+		{
+			locateWool(mywool, px + x, y, pz + z);
+			locateWool(mywool, px + x, y, pz - z);
+			locateWool(mywool, px - x, y, pz + z);
+			locateWool(mywool, px - x, y, pz - z);
+		}
+
+		bz++;
+	}
+
+
+}
+
 int main()
 {
 	locate_rail(0, 20, 0, 1, 0);

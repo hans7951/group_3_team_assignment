@@ -724,6 +724,8 @@ int main()
 	locateBlock(air, x + 1, 6, z + 51);
 	locateBlock(air, x + 1, 7, z + 51);
 
+	locateBlock(air, x + 91,6 , z - 78);
+	
 	locate_elevator(x + 50, 8, z + 1);
 	locateWater(water, x + 50, 252, z + 1);
 }

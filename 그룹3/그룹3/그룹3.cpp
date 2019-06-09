@@ -691,5 +691,37 @@ void pyramid(int px, int py, int pz)
 
 int main()
 {
-	locate_rail(0, 20, 0, 1, 0);
+	int x, y, z;
+	scanf_s("%d %d %d", &x, &y, &z);
+
+	stage_1(x, y, z - 52);
+	stage_2(x, y, z + 52);
+	stage_3(x + 91, y, z + 50);
+	pyramid(x + 91, y, z - 80);
+	stage_5(x + 199, y, z + 1);
+
+	locate_cube(x, 251, z, 200, 4, 0, glass);
+	locate_cube(x, 251, z - 50, 100, 4, 1, glass);
+	locate_cube(x + 90, 251, z - 80, 130, 4, 1, glass);
+
+	locate_cube(x + 1, 252, z + 1, 200, 2, 0, air);
+	locate_cube(x + 1, 252, z - 50, 100, 2, 1, air);
+	locate_cube(x + 1 + 90, 252, z - 80, 130, 2, 1, air);
+
+	locate_cube(x, 5, z, 156, 4, 0, glass);
+	locate_cube(x, 5, z - 30, 81, 4, 1, glass);
+	locate_cube(x + 90, 5, z - 78, 126, 4, 1, glass);
+
+	locate_cube(x + 1, 6, z + 1, 156, 2, 0, air);
+	locate_cube(x + 1, 6, z - 30, 81, 2, 1, air);
+	locate_cube(x + 1 + 90, 6, z - 78, 126, 2, 1, air);
+	
+	locateBlock(air, x + 1 + 90, 6, z - 78);
+	locateBlock(air, x + 1 + 90, 7, z - 78);
+
+	locateBlock(air, x + 1, 6, z + 51);
+	locateBlock(air, x + 1, 7, z + 51);
+
+	locate_elevator(x + 50, 8, z + 1);
+	locateWater(water, x + 50, 252, z + 1);
 }

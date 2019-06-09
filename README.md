@@ -11,3 +11,6 @@ stage_1 함수 : x,y,z값을 입력받아 건물의 위치를 설정해 생성�
 
 woolColor 함수 : color변수의 값이 1 증가할 때마다 양털의 색깔이 빨주노초파남보 순으로 바뀌도록 만듦
                 순서가 보라색이면 color값을 0로 만들어 사이클이 다시 돌아가도록 만듦
+                
+#youtube 영상
+https://youtu.be/IGVjWBt5QZA

@@ -508,6 +508,55 @@ void stage_1(int x, int y, int z)
 	}
 	판(x-1,y + 1,z-1,3,water);
 }
+
+void Install_stage_2(int x, int z, int h, int floor, int deco)
+{
+	BlockID wool[16];
+	for (int i = 0; i < 16; i++) wool[i] = createWool(BlockColor(i)); //양털 색 정의
+	for (int i = 0; i <= h; i++)
+	{
+		locateWool(wool[((int)((deco-i)/2)) % 16], x, floor + i, z);  //현재 위치부터 바닥까지 양털 놓음.
+	}
+}
+
+void Drop_stage_2(int x, int y, int z, int h)
+{
+	int direc[4][2] = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }; //북 동 남 서?
+	int ndir = 0, nh=1, deco=0, rot=1, n=1;                 //ndir:현재 방향  nh:현재 높이    deco:색 정할때 씀&nh에 더해 현재 횟수를 나타냄.  
+	int loc[4][2] = { {x, z}, {x, z}, {x, z}, {x, z} };     //rot:중심에서 바깥으로 몇껍질 나갔는지(가장 중심이 1껍질) n:방향 바꿈을 알려줌  loc:4방향을 대칭으로 하고 그것들 위치
+	bool flag = false;                                      //flag : 마지막 줄인지 나타내줌 
+	locateWool(createWool(BlockColor(0)), x, y, z);         //처음 위치에 양털을 놓음
+	for ( ; nh <= h; nh++)
+	{
+		if (flag && nh+deco==n) break;                      //지금이 마지막이면 나가라
+		for (int i = 0; i < 4; i++)
+		{
+			loc[i][0] += direc[(i + ndir)%4][0];            //x와 z좌표에 방향값을 더해 좌표를 이동
+			loc[i][1] += direc[(i + ndir)%4][1];
+			Install_stage_2(loc[i][0], loc[i][1], nh, y, nh+deco);  //이 블록 아래로 바닥(입력받은 바닥 y값)까지 블럭을 놓음
+		}
+		if (nh+deco==n)                                    //방향이 바뀔 횟수면
+		{
+			ndir++;                                        //방향 바꾸고
+			if (nh == h) flag = true;                      //최대높이이면 벽을 세울 한 줄을 돌린 뒤 나가고
+			n += rot++ * 2;                                //다음 번 방향 바꿀 횟수 계산
+		}
+		if (nh == h)                                       //최대높이에 도달하면 그 높이 그대로 냅두고 양털 색과 횟수를 위해 deco에 대신 더함
+		{
+			nh--;
+			deco++;
+		}
+	}
+	locateWater(createWater(false), x, y + 1, z);         //죽지 않기 위해 물
+}
+
+void stage_2(int x, int y, int z)
+{
+	int h, y2=250;
+	h = y2 - y-1;      //높이
+	Drop_stage_2(x, y, z, h);                     //드로퍼 설치
+}
+
 int main()
 {
 	locate_rail(0, 20, 0, 1, 0);
